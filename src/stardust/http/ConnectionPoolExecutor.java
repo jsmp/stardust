@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author joao
  */
-public class ConnectionPoolExecutor extends ThreadPoolExecutor {    
+public class ConnectionPoolExecutor extends ThreadPoolExecutor {
     public ConnectionPoolExecutor(Server server, int corePoolSize,
                               int maximumPoolSize,
                               long keepAliveTime,
