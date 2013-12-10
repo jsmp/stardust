@@ -69,7 +69,7 @@ public class Server extends Thread
     this.totalRequests = 0L;
     this.queue = new LinkedBlockingQueue();
 
-    this.pool = new ConnectionPoolExecutor(this, 100, 200, 30L, TimeUnit.SECONDS, this.queue);
+    this.pool = new ConnectionPoolExecutor(this, 500, 1000, 180L, TimeUnit.SECONDS, this.queue);
     try
     {
       if (this.useSSL) {
