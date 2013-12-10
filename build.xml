@@ -1,0 +1,64 @@
+<project name="stardust" default="build" basedir=".">
+	<!-- 
+	Properties 		
+	-->
+	<property name="main-class" value="stardust.Main"/>
+	<property name="jar-name" value="stardust.jar"/>
+	<property name="src" location="src"/>
+	<property name="classes" location="build"/>
+	<property name="dist"  location="dist"/>
+	<property name="javadoc" location="doc/javadoc"/>
+	<property name="lib" location="lib"/>
+
+	<path id="classpath">
+		<fileset dir="${lib}">
+			<include name="*.jar"/>		
+		</fileset>
+	</path>
+
+	<target name="clean" description="clean dist and intermediate files">
+		<delete dir="${classes}"/>
+		<delete dir="${javadoc}"/>
+		<delete dir="${dist}"/>
+	</target>
+
+	<target name="compile" description="compile .java into .class files">
+		<mkdir dir="${classes}" />
+		<javac srcdir="${src}" destdir="${classes}" includeantruntime="true">
+			<classpath refid="classpath"/>
+		</javac>
+	</target>
+
+	<target name="javadoc" description="create javadoc">
+		<javadoc destdir="${javadoc}" author="true" version="true" use="true" windowtitle="CallCenter-Outbound">
+			<fileset dir="${src}" defaultexcludes="true" />			
+		</javadoc> 		
+	</target>
+
+	<target name="build" description="build jar" depends="clean,compile">
+		<mkdir dir="${dist}"/>
+		<manifestclasspath property="jar.classpath" jarfile="${dist}/{$jar-name}">
+			<classpath refid="classpath" />
+        </manifestclasspath>
+        <copy todir="${dist}/lib">
+            <fileset dir="lib"/>
+        </copy>
+        <copy todir="${dist}">
+            <fileset file="outbound.yml"/>
+        </copy>                        
+		<jar destfile="${dist}/${jar-name}">
+			<fileset dir="${classes}" includes="**/*.class"/>
+			<manifest>
+				<attribute name="Main-Class"  value="${main-class}"/>
+				<attribute name="Class-Path"  value="${jar.classpath}"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run" description="run" depends="build">
+		<java fork="true" jar="${dist}/${jar-name}">
+		</java>
+	</target>
+
+	<target name="build-all" description="build and gerate javadoc" depends="build,javadoc"/>
+</project>
