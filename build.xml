@@ -30,7 +30,7 @@
 	</target>
 
 	<target name="javadoc" description="create javadoc">
-		<javadoc destdir="${javadoc}" author="true" version="true" use="true" windowtitle="CallCenter-Outbound">
+		<javadoc destdir="${javadoc}" author="true" version="true" use="true" windowtitle="Stardust">
 			<fileset dir="${src}" defaultexcludes="true" />			
 		</javadoc> 		
 	</target>
@@ -43,9 +43,6 @@
         <copy todir="${dist}/lib">
             <fileset dir="lib"/>
         </copy>
-        <copy todir="${dist}">
-            <fileset file="outbound.yml"/>
-        </copy>                        
 		<jar destfile="${dist}/${jar-name}">
 			<fileset dir="${classes}" includes="**/*.class"/>
 			<manifest>
